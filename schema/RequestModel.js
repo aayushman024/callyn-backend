@@ -4,7 +4,7 @@ const RequestSchema = new mongoose.Schema({
   requestedContact: { type: String, required: true },
   requestedBy: { type: String, required: true },
   reason: { type: String, required: true },
-  isApproved: { type: Boolean, default: false },
+  status: { type: String, default: "pending" }, // pending, approved, rejected
   createdAt: { type: Date, default: Date.now },
 });
 

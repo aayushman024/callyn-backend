@@ -8,4 +8,4 @@ const RequestSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-export default mongoose.model("callyn-personalContact-request", RequestSchema);
+export default RequestSchema;

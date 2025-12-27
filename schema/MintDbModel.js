@@ -31,6 +31,4 @@ const mintDbSchema = new Schema({
   timestamps: false
 });
 
-const MintDbModel = mongoose.model('MintDb', mintDbSchema);
-
-export default MintDbModel;
+export default mintDbSchema;

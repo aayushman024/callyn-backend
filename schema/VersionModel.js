@@ -12,4 +12,4 @@ const VersionSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now }
 }, { collection: 'callyn-version' }); // <--- FIX: Force exact collection name
 
-export default mongoose.model("callyn-version", VersionSchema);
+export default VersionSchema;

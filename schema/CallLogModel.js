@@ -35,4 +35,4 @@ const CallLogSchema = new mongoose.Schema({
 });
 
 // This will create a collection named 'calllogs' (mongoose automatically lowercases and pluralizes)
-export default mongoose.model("CallLog", CallLogSchema);
+export default CallLogSchema;

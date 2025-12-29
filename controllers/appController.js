@@ -1,36 +1,12 @@
-import express from "express";
-import mongoose from "mongoose";
-import dotenv from "dotenv";
+import MintDbModel from "../schema/MintDbModel.js";
+import CallLogModel from "../schema/CallLogModel.js";
+import VersionModel from "../schema/VersionModel.js";
+import RequestModel from "../schema/RequestModel.js";
 
-// --- 1. Import SCHEMAS ---
-// Note: These files must export the Schema object (e.g., export default UserSchema)
-import MintDbSchema from "../schema/MintDbModel.js";
-import CallLogSchema from "../schema/CallLogModel.js";
-import VersionSchema from "../schema/VersionModel.js";
-import RequestSchema from "../schema/RequestModel.js";
-
-dotenv.config();
-
-// --- 2. Database Connection Setup ---
-
-// Connect specifically to the "Milestone" Database
-const milestoneDbName = "Milestone";
-const milestoneConn = mongoose.createConnection(process.env.MONGO_URI, {
-  dbName: milestoneDbName,
-});
-
-// Register Models on the Milestone Connection
-const MintDbModel = milestoneConn.model("MintDb", MintDbSchema);
-const CallLogModel = milestoneConn.model("CallLogs", CallLogSchema);
-const VersionModel = milestoneConn.model("callyn-version", VersionSchema);
-const RequestModel = milestoneConn.model("Requests", RequestSchema);
-
-console.log(`[DB] Connected to database: ${milestoneDbName}`);
-
-// --- 3. Helpers ---
+// --- Helpers ---
 const normalizeName = (name) => (name ? name.toString().toLowerCase().trim() : "");
 
-// --- 4. Request Handlers ---
+// --- Request Handlers ---
 
 export const requestAsPersonal = async (req, res) => {
   try {
@@ -90,13 +66,12 @@ export const updateRequestStatus = async (req, res) => {
   }
 };
 
-// --- 5. Call Log Handlers ---
+// --- Call Log Handlers ---
 
 export const uploadCallLog = async (req, res) => {
   try {
     const { callerName, rshipManagerName, type, timestamp, duration } = req.body;
-    // Ensure req.user exists (middleware should handle this)
-    const uploadedBy = req.user ? req.user.name : "Unknown";
+    const uploadedBy = req.user.name;
 
     if (!callerName || !type || !timestamp) {
       return res.status(400).json({ message: "Missing required fields" });
@@ -120,7 +95,7 @@ export const uploadCallLog = async (req, res) => {
   }
 };
 
-// --- 6. Data Handlers ---
+// --- Data Handlers ---
 
 export const getLegacyData = async (req, res) => {
   try {
